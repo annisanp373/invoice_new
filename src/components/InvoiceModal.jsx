@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
-import logo from '../assets/logo.png'; // Update with your actual path to logo
+import logo from '../assets/logo.png';
 
 const InvoiceModal = ({
   isOpen,
@@ -39,7 +39,7 @@ const InvoiceModal = ({
         img.src = dataUrl;
         img.onload = () => {
           const pdf = new jsPDF({
-            orientation: 'portrait',
+            orientation: 'landscape',
             unit: 'px',
             format: 'a4',
           });
@@ -78,7 +78,7 @@ const InvoiceModal = ({
           </Transition.Child>
 
           <span className="inline-block h-screen align-middle" aria-hidden="true">
-            &#8203;
+            &#8203; 
           </span>
           <Transition.Child
             as={Fragment}
@@ -89,7 +89,7 @@ const InvoiceModal = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
+            <div className="my-8 inline-block w-full max-w-3xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
               <div className="p-4" id="print">
                 <div className="flex items-center justify-between">
                   <img src={logo} alt="Company Logo" className="w-40 h-40" />

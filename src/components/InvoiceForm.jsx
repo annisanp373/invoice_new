@@ -13,7 +13,6 @@ const today = date.toLocaleDateString('en-GB', {
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [discount, setDiscount] = useState('');
-  const [tax, setTax] = useState('');
   const [invoiceNumber, setInvoiceNumber] = useState(1);
   const [cashierName, setCashierName] = useState('');
   const [customerName, setCustomerName] = useState('');
@@ -78,16 +77,15 @@ const InvoiceForm = () => {
       return prev + Number(curr.price * Math.floor(curr.qty));
     else return prev;
   }, 0);
-  const taxRate = (tax * subtotal) / 100;
   const discountRate = (discount * subtotal) / 100;
-  const total = subtotal - discountRate + taxRate;
+  const total = subtotal - discountRate;
 
   return (
     <form
       className="relative flex flex-col px-2 md:flex-row"
       onSubmit={reviewInvoiceHandler}
     >
-      <div className="my-6 flex-1 space-y-2  rounded-md bg-white p-4 shadow-sm sm:space-y-4 md:p=6">
+      <div className="my-6 flex-1 space-y-2 rounded-md bg-white p-4 shadow-sm sm:space-y-4 md:p=6">
         <div className="flex flex-col justify-between space-y-2 border-b border-gray-900/10 pb-4 md:flex-row md:items-center md:space-y-0">
           <div className="flex space-x-2">
             <span className="font-bold">Current Date: </span>
@@ -226,7 +224,15 @@ const InvoiceForm = () => {
                     type="text"
                     name="name"
                     value={item.name}
-                    onChange={(event) => editItemHandler({ target: { id: item.id, name: 'name', value: event.target.value } })}
+                    onChange={(event) =>
+                      editItemHandler({
+                        target: {
+                          id: item.id,
+                          name: 'name',
+                          value: event.target.value,
+                        },
+                      })
+                    }
                   />
                 </td>
                 <td>
@@ -235,7 +241,15 @@ const InvoiceForm = () => {
                     name="qty"
                     value={item.qty}
                     min="1"
-                    onChange={(event) => editItemHandler({ target: { id: item.id, name: 'qty', value: event.target.value } })}
+                    onChange={(event) =>
+                      editItemHandler({
+                        target: {
+                          id: item.id,
+                          name: 'qty',
+                          value: event.target.value,
+                        },
+                      })
+                    }
                   />
                 </td>
                 <td>
@@ -245,7 +259,15 @@ const InvoiceForm = () => {
                     value={item.price}
                     min="0"
                     step="1000"
-                    onChange={(event) => editItemHandler({ target: { id: item.id, name: 'price', value: event.target.value } })}
+                    onChange={(event) =>
+                      editItemHandler({
+                        target: {
+                          id: item.id,
+                          name: 'price',
+                          value: event.target.value,
+                        },
+                      })
+                    }
                   />
                 </td>
                 <td>
@@ -283,45 +305,20 @@ const InvoiceForm = () => {
           />
         </div>
         <div className="mt-4">
-          <label htmlFor="tax" className="text-sm font-bold sm:text-base">
-            Tax (%):
-          </label>
-          <input
-            type="number"
-            name="tax"
-            id="tax"
-            value={tax}
-            min="0"
-            max="100"
-            onChange={(event) => setTax(event.target.value)}
-          />
+          <h2 className="text-sm font-bold sm:text-base">Subtotal: {subtotal}</h2>
+          <h2 className="text-sm font-bold sm:text-base">Discount: {discountRate}</h2>
+          <h2 className="text-sm font-bold sm:text-base">Total: {total}</h2>
         </div>
-        <div className="mt-4 text-right">
-          <div>Subtotal: {subtotal.toFixed(2)}</div>
-          <div>Discount: {discountRate.toFixed(2)}</div>
-          <div>Tax: {taxRate.toFixed(2)}</div>
-          <div className="font-bold">Total: {total.toFixed(2)}</div>
-        </div>
-      </div>
-      <div className="flex items-center justify-center space-x-4 p-4 md:p-6">
         <button
           type="submit"
-          className="rounded bg-green-500 p-2 text-white"
+          className="my-4 w-full rounded bg-green-500 p-2 text-white"
         >
           Review Invoice
-        </button>
-        <button
-          type="button"
-          onClick={addNextInvoiceHandler}
-          className="rounded bg-yellow-500 p-2 text-white"
-        >
-          New Invoice
         </button>
       </div>
       <InvoiceModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        invoiceNumber={invoiceNumber}
         cashierName={cashierName}
         customerName={customerName}
         phoneNumber={phoneNumber}
@@ -330,7 +327,6 @@ const InvoiceForm = () => {
         guarantee={guarantee}
         items={items}
         subtotal={subtotal}
-        taxRate={taxRate}
         discountRate={discountRate}
         total={total}
       />
