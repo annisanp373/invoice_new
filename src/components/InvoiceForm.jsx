@@ -12,7 +12,6 @@ const today = date.toLocaleDateString('en-GB', {
 
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [discount, setDiscount] = useState('');
   const [invoiceNumber, setInvoiceNumber] = useState(1);
   const [cashierName, setCashierName] = useState('');
   const [customerName, setCustomerName] = useState('');
@@ -26,6 +25,7 @@ const InvoiceForm = () => {
       name: '',
       qty: 1,
       price: '0',
+      discount: '0',
     },
   ]);
 
@@ -42,6 +42,7 @@ const InvoiceForm = () => {
         name: '',
         qty: 1,
         price: '0',
+        discount: '0',
       },
     ]);
   };
@@ -55,6 +56,7 @@ const InvoiceForm = () => {
         name: '',
         qty: 1,
         price: '0',
+        discount: '0',
       },
     ]);
   };
@@ -77,8 +79,12 @@ const InvoiceForm = () => {
       return prev + Number(curr.price * Math.floor(curr.qty));
     else return prev;
   }, 0);
-  const discountRate = (discount * subtotal) / 100;
-  const total = subtotal - discountRate;
+
+  const totalDiscount = items.reduce((prev, curr) => {
+    return prev + (Number(curr.price * curr.qty) * Number(curr.discount) / 100);
+  }, 0);
+
+  const total = subtotal - totalDiscount;
 
   return (
     <form
@@ -213,6 +219,7 @@ const InvoiceForm = () => {
               <th>NAMA BARANG</th>
               <th>QTY</th>
               <th className="text-center">HARGA</th>
+              <th className="text-center">DISCOUNT (%)</th>
               <th className="text-center">HAPUS</th>
             </tr>
           </thead>
@@ -271,6 +278,24 @@ const InvoiceForm = () => {
                   />
                 </td>
                 <td>
+                  <input
+                    type="number"
+                    name="discount"
+                    value={item.discount}
+                    min="0"
+                    max="100"
+                    onChange={(event) =>
+                      editItemHandler({
+                        target: {
+                          id: item.id,
+                          name: 'discount',
+                          value: event.target.value,
+                        },
+                      })
+                    }
+                  />
+                </td>
+                <td>
                   <button
                     type="button"
                     onClick={() => deleteItemHandler(item.id)}
@@ -291,22 +316,8 @@ const InvoiceForm = () => {
           Add Item
         </button>
         <div className="mt-4">
-          <label htmlFor="discount" className="text-sm font-bold sm:text-base">
-            Discount (%):
-          </label>
-          <input
-            type="number"
-            name="discount"
-            id="discount"
-            value={discount}
-            min="0"
-            max="100"
-            onChange={(event) => setDiscount(event.target.value)}
-          />
-        </div>
-        <div className="mt-4">
           <h2 className="text-sm font-bold sm:text-base">Subtotal: {subtotal}</h2>
-          <h2 className="text-sm font-bold sm:text-base">Discount: {discountRate}</h2>
+          <h2 className="text-sm font-bold sm:text-base">Total Discount: {totalDiscount}</h2>
           <h2 className="text-sm font-bold sm:text-base">Total: {total}</h2>
         </div>
         <button
@@ -327,7 +338,7 @@ const InvoiceForm = () => {
         guarantee={guarantee}
         items={items}
         subtotal={subtotal}
-        discountRate={discountRate}
+        discountRate={totalDiscount}
         total={total}
       />
     </form>

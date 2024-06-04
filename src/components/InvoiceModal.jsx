@@ -16,7 +16,6 @@ const InvoiceModal = ({
   guarantee,
   items,
   subtotal,
-  taxRate,
   discountRate,
   total,
   onAddNextInvoice,
@@ -132,8 +131,8 @@ const InvoiceModal = ({
                           <td className="p-2">{item.name}</td>
                           <td className="p-2 text-center">{item.qty}</td>
                           <td className="p-2 text-right">Rp{Number(item.price).toFixed(2)}</td>
-                          <td className="p-2 text-right">20%</td>
-                          <td className="p-2 text-right">Rp{(item.price * item.qty * 0.8).toFixed(2)}</td>
+                          <td className="p-2 text-right">{item.discount}%</td>
+                          <td className="p-2 text-right">Rp{((item.price * item.qty) * (1 - item.discount / 100)).toFixed(2)}</td>
                         </tr>
                       ))}
                     </tbody>
