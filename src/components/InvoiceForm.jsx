@@ -19,6 +19,7 @@ const InvoiceForm = () => {
   const [pickupDateTime, setPickupDateTime] = useState('');
   const [returnDateTime, setReturnDateTime] = useState('');
   const [guarantee, setGuarantee] = useState('');
+  const [dp, setDp] = useState(0);
   const [items, setItems] = useState([
     {
       id: uid(6),
@@ -85,6 +86,7 @@ const InvoiceForm = () => {
   }, 0);
 
   const total = subtotal - totalDiscount;
+  const grandTotal = total - dp;
 
   return (
     <form
@@ -320,6 +322,27 @@ const InvoiceForm = () => {
           <h2 className="text-sm font-bold sm:text-base">Total Discount: {totalDiscount}</h2>
           <h2 className="text-sm font-bold sm:text-base">Total: {total}</h2>
         </div>
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          <div className="col-start-2">
+            <label
+              htmlFor="dp"
+              className="text-sm font-bold sm:text-base"
+            >
+              DP:
+            </label>
+            <input
+              required
+              className="w-full"
+              placeholder="DP"
+              type="number"
+              name="dp"
+              id="dp"
+              value={dp}
+              onChange={(event) => setDp(event.target.value)}
+            />
+            <h2 className="mt-4 text-sm font-bold sm:text-base">Grand Total: {grandTotal}</h2>
+          </div>
+        </div>
         <button
           type="submit"
           className="my-4 w-full rounded bg-green-500 p-2 text-white"
@@ -340,6 +363,8 @@ const InvoiceForm = () => {
         subtotal={subtotal}
         discountRate={totalDiscount}
         total={total}
+        dp={dp}
+        grandTotal={grandTotal}
       />
     </form>
   );

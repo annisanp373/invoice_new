@@ -4,6 +4,14 @@ import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import logo from '../assets/logo.png';
 
+const formatRupiah = (number) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(number);
+};
+
 const InvoiceModal = ({
   isOpen,
   setIsOpen,
@@ -18,6 +26,8 @@ const InvoiceModal = ({
   subtotal,
   discountRate,
   total,
+  dp,
+  grandTotal,
   onAddNextInvoice,
 }) => {
   function closeModal() {
@@ -38,9 +48,9 @@ const InvoiceModal = ({
         img.src = dataUrl;
         img.onload = () => {
           const pdf = new jsPDF({
-            orientation: 'landscape',
+            orientation: 'portrait',
             unit: 'px',
-            format: 'a4',
+            format: [img.width, img.height],
           });
 
           const imgProps = pdf.getImageProperties(img);
@@ -55,6 +65,16 @@ const InvoiceModal = ({
         console.error('oops, something went wrong!', error);
       });
   };
+
+  const calculateDiscountedTotal = (items) => {
+    return items.reduce((acc, item) => {
+      const itemTotal = item.price * item.qty;
+      const discountedTotal = itemTotal * (1 - item.discount / 100);
+      return acc + discountedTotal;
+    }, 0);
+  };
+
+  const discountedTotal = calculateDiscountedTotal(items);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -77,7 +97,7 @@ const InvoiceModal = ({
           </Transition.Child>
 
           <span className="inline-block h-screen align-middle" aria-hidden="true">
-            &#8203; 
+            &#8203;
           </span>
           <Transition.Child
             as={Fragment}
@@ -91,7 +111,16 @@ const InvoiceModal = ({
             <div className="my-8 inline-block w-full max-w-3xl transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
               <div className="p-4" id="print">
                 <div className="flex items-center justify-between">
-                  <img src={logo} alt="Company Logo" className="w-40 h-40" />
+                  <div>
+                    <img src={logo} alt="Company Logo" className="w-40 h-40" />
+                    <div className="mt-4 text-sm">
+                      <p>CV IFRAME INOVASI MEDIA</p>
+                      <p>(IFRAME Rental #1 Palagan - Lempong)</p>
+                      <p>Jl. Kranji, Gang Yudistira, Nglempong Lor, RT 7 / RW 22</p>
+                      <p>Sariharjo, Ngaglik Sleman 55581</p>
+                      <p>0812 7679 7711</p>
+                    </div>
+                  </div>
                   <div className="text-sm">
                     <p className="font-bold">Nama :</p>
                     <p>{customerName}</p>
@@ -104,13 +133,6 @@ const InvoiceModal = ({
                     <p className="font-bold">Jaminan :</p>
                     <p>{guarantee}</p>
                   </div>
-                </div>
-                <div className="mt-4 text-sm">
-                  <p>CV IFRAME INOVASI MEDIA</p>
-                  <p>(IFRAME Rental #1 Palagan - Lempong)</p>
-                  <p>Jl. Kranji, Gang Yudistira, Nglempong Lor, RT 7 / RW 22</p>
-                  <p>Sariharjo, Ngaglik Sleman 55581</p>
-                  <p>0812 7679 7711</p>
                 </div>
                 <div className="mt-6">
                   <table className="w-full text-left">
@@ -130,13 +152,37 @@ const InvoiceModal = ({
                           <td className="p-2">{index + 1}</td>
                           <td className="p-2">{item.name}</td>
                           <td className="p-2 text-center">{item.qty}</td>
-                          <td className="p-2 text-right">Rp{Number(item.price).toFixed(2)}</td>
+                          <td className="p-2 text-right">{formatRupiah(item.price)}</td>
                           <td className="p-2 text-right">{item.discount}%</td>
-                          <td className="p-2 text-right">Rp{((item.price * item.qty) * (1 - item.discount / 100)).toFixed(2)}</td>
+                          <td className="p-2 text-right">{formatRupiah((item.price * item.qty) * (1 - item.discount / 100))}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                </div>
+                <div className="mt-6 flex justify-end text-sm">
+                  <div className="w-64">
+                    <div className="flex justify-between border-t pt-2">
+                      <span>Subtotal:</span>
+                      <span>{formatRupiah(subtotal)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Diskon:</span>
+                      <span>{formatRupiah(subtotal - discountedTotal)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Total:</span>
+                      <span>{formatRupiah(discountedTotal)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>DP:</span>
+                      <span>{formatRupiah(dp)}</span>
+                    </div>
+                    <div className="flex justify-between font-bold border-t pt-2">
+                      <span>Grand Total:</span>
+                      <span>{formatRupiah(discountedTotal - dp)}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="mt-4 flex space-x-2 px-4 pb-6">
