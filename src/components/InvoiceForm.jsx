@@ -25,6 +25,7 @@ const InvoiceForm = () => {
       id: uid(6),
       name: '',
       qty: 1,
+      rentTime: '6 Jam',
       price: '0',
       discount: '0',
     },
@@ -42,6 +43,7 @@ const InvoiceForm = () => {
         id: uid(6),
         name: '',
         qty: 1,
+        rentTime: '6 Jam',
         price: '0',
         discount: '0',
       },
@@ -56,6 +58,7 @@ const InvoiceForm = () => {
         id: id,
         name: '',
         qty: 1,
+        rentTime: '6 Jam',
         price: '0',
         discount: '0',
       },
@@ -220,6 +223,7 @@ const InvoiceForm = () => {
             <tr className="border-b border-gray-900/10 text-sm md:text-base">
               <th>NAMA BARANG</th>
               <th>QTY</th>
+              <th>JAM SEWA</th>
               <th className="text-center">HARGA</th>
               <th className="text-center">DISCOUNT (%)</th>
               <th className="text-center">HAPUS</th>
@@ -260,6 +264,25 @@ const InvoiceForm = () => {
                       })
                     }
                   />
+                </td>
+                <td>
+                  <select
+                    name="rentTime"
+                    value={item.rentTime}
+                    onChange={(event) =>
+                      editItemHandler({
+                        target: {
+                          id: item.id,
+                          name: 'rentTime',
+                          value: event.target.value,
+                        },
+                      })
+                    }
+                  >
+                    <option value="6 Jam">6 Jam</option>
+                    <option value="12 Jam">12 Jam</option>
+                    <option value="24 Jam">24 Jam</option>
+                  </select>
                 </td>
                 <td>
                   <input
@@ -365,6 +388,7 @@ const InvoiceForm = () => {
         total={total}
         dp={dp}
         grandTotal={grandTotal}
+        invoiceNumber={invoiceNumber} // Pass invoiceNumber here
       />
     </form>
   );
