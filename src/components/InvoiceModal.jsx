@@ -122,6 +122,8 @@ const InvoiceModal = ({
                     </div>
                   </div>
                   <div className="text-sm">
+                    <p className="font-bold">Invoice Number :</p>
+                    <p>{invoiceNumber}</p>
                     <p className="font-bold">Nama :</p>
                     <p>{customerName}</p>
                     <p className="font-bold">No. Telpon :</p>
@@ -221,10 +223,10 @@ const InvoiceModal = ({
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M3 10h18M3 6h18M3 14h18M3 18h18"
+                      d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Add Another</span>
+                  <span>Selesai</span>
                 </button>
               </div>
             </div>
@@ -236,3 +238,4 @@ const InvoiceModal = ({
 };
 
 export default InvoiceModal;
+  
