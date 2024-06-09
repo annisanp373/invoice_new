@@ -143,8 +143,10 @@ const InvoiceModal = ({
                         <th className="p-2">NO.</th>
                         <th className="p-2">Nama Barang</th>
                         <th className="p-2">Qty</th>
+                        <th className="p-2">Jam Sewa</th>
                         <th className="p-2">Tarif</th>
                         <th className="p-2">Diskon</th>
+                        <th className="p-2">Keterangan</th>
                         <th className="p-2">Total</th>
                       </tr>
                     </thead>
@@ -154,8 +156,10 @@ const InvoiceModal = ({
                           <td className="p-2">{index + 1}</td>
                           <td className="p-2">{item.name}</td>
                           <td className="p-2 text-center">{item.qty}</td>
+                          <td className="p-2 text-center">{item.rentTime}</td>
                           <td className="p-2 text-right">{formatRupiah(item.price)}</td>
                           <td className="p-2 text-right">{item.discount}%</td>
+                          <td className="p-2">{item.description}</td>
                           <td className="p-2 text-right">{formatRupiah((item.price * item.qty) * (1 - item.discount / 100))}</td>
                         </tr>
                       ))}
@@ -212,21 +216,7 @@ const InvoiceModal = ({
                   onClick={addNextInvoiceHandler}
                   className="flex w-full items-center justify-center space-x-1 rounded-md border border-emerald-500 bg-emerald-500 py-2 text-sm text-white shadow-sm hover:bg-emerald-600"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span>Selesai</span>
+                  <span>Buat Invoice Baru</span>
                 </button>
               </div>
             </div>
@@ -238,4 +228,3 @@ const InvoiceModal = ({
 };
 
 export default InvoiceModal;
-  

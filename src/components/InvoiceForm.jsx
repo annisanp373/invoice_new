@@ -28,6 +28,7 @@ const InvoiceForm = () => {
       rentTime: '6 Jam',
       price: '0',
       discount: '0',
+      description: '',
     },
   ]);
 
@@ -46,6 +47,7 @@ const InvoiceForm = () => {
         rentTime: '6 Jam',
         price: '0',
         discount: '0',
+        description: '',
       },
     ]);
   };
@@ -61,6 +63,7 @@ const InvoiceForm = () => {
         rentTime: '6 Jam',
         price: '0',
         discount: '0',
+        description: '',
       },
     ]);
   };
@@ -226,6 +229,7 @@ const InvoiceForm = () => {
               <th>JAM SEWA</th>
               <th className="text-center">HARGA</th>
               <th className="text-center">DISCOUNT (%)</th>
+              <th className="text-center">KETERANGAN</th>
               <th className="text-center">HAPUS</th>
             </tr>
           </thead>
@@ -321,6 +325,22 @@ const InvoiceForm = () => {
                   />
                 </td>
                 <td>
+                  <input
+                    type="text"
+                    name="description"
+                    value={item.description}
+                    onChange={(event) =>
+                      editItemHandler({
+                        target: {
+                          id: item.id,
+                          name: 'description',
+                          value: event.target.value,
+                        },
+                      })
+                    }
+                  />
+                </td>
+                <td>
                   <button
                     type="button"
                     onClick={() => deleteItemHandler(item.id)}
@@ -388,7 +408,7 @@ const InvoiceForm = () => {
         total={total}
         dp={dp}
         grandTotal={grandTotal}
-        invoiceNumber={invoiceNumber} // Pass invoiceNumber here
+        invoiceNumber={invoiceNumber}
       />
     </form>
   );
