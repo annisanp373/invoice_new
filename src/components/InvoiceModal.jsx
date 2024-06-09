@@ -190,33 +190,66 @@ const InvoiceModal = ({
                     </div>
                   </div>
                 </div>
+                <div className="mt-4 text-left">
+                  <div>
+                    <span>Akun Social Media:</span>
+                  </div>
+                  <div>
+                    <span>Kode Referral:</span>
+                  </div>
+                  <div className="mt-4 text-left">
+                    <p className="font-bold">Syarat & Ketentuan:</p>
+                    <ol className="list-decimal pl-4 text-sm">
+                      <li>Tarif sewa dihitung per 24, 12 atau 6 jam sejak pengambilan.</li>
+                      <li>Pembayaran harus LUNAS saat pengambilan dengan cash/tunai, QRIS atau transfer via rekening bank.</li>
+                      <li>Penyewa harus meninggalkan minimal 2 identitas Jogja yang identik atas nama satu orang dan masih berlaku (KTP/SIM/KTM/KK/Ijazah).</li>
+                      <li>Untuk nilai alat tertentu, jaminan harus dilengkapi dengan STNK/BPKB dan atau kendaraan bermotor.</li>
+                      <li>Saat pengambilan barang, penyewa HARUS bersedia difoto dan menunjukkan akun media sosial yang aktif untuk diverifikasi.</li>
+                      <li>Kerusakan dan kehilangan barang, sepenuhnya DITANGGUNG oleh penyewa. Silakan cek kondisi & kelengkapan barang yang disewa saat penerimaan.</li>
+                      <li>Barang yang sudah disewa tidak boleh dialihkan ke pihak lain tanpa sepengetahuan dan ijin dari IFRAME Rental.</li>
+                      <li>Barang yang sudah disewa dan dibawa, dianggap telah digunakan. Uang yang sudah dibayarkan tidak dapat dikembalikan/cancel.</li>
+                      <li>Keterlambatan pengembalian akan dikenakan denda sesuai dengan tarif sewa harian yang berlaku.</li>
+                      <li>Barang sewaan harus kembali dalam kondisi baik dan lengkap sesuai dengan saat diterima.</li>
+                      <li>Apabila penyewa melanggar ketentuan, IFRAME Rental berhak menarik barang kapanpun dan dimanapun tanpa pengembalian uang sewa.</li>
+                      <li>Dengan menyewa, penyewa dianggap telah memahami dan menyetujui seluruh syarat dan ketentuan ini.</li>
+                      <li>Penyewa wajib menjaga kebersihan barang dan mengembalikannya dalam kondisi yang sama saat diterima.</li>
+                      <li>IFRAME Rental berhak menolak calon penyewa yang tidak memenuhi syarat dan ketentuan yang berlaku.</li>
+                      <li>Untuk keamanan dan kenyamanan bersama, harap patuhi syarat dan ketentuan yang telah ditetapkan.</li>
+                    </ol>
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <div className="text-center">
+                      <p className="font-bold">Operator</p>
+                      <p className="mt-8">(____________________)</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="font-bold">Penyewa</p>
+                      <p className="mt-8">(____________________)</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="mt-4 flex space-x-2 px-4 pb-6">
+              <div className="flex justify-end gap-2 bg-gray-50 p-4">
                 <button
-                  className="flex w-full items-center justify-center space-x-1 rounded-md border border-blue-500 py-2 text-sm text-blue-500 shadow-sm hover:bg-blue-500 hover:text-white"
-                  onClick={SaveAsPDFHandler}
+                  type="button"
+                  className="rounded-md bg-gray-500 px-4 py-2 text-sm text-white hover:bg-gray-600"
+                  onClick={closeModal}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  <span>Download</span>
+                  Close
                 </button>
                 <button
-                  onClick={addNextInvoiceHandler}
-                  className="flex w-full items-center justify-center space-x-1 rounded-md border border-emerald-500 bg-emerald-500 py-2 text-sm text-white shadow-sm hover:bg-emerald-600"
+                  type="button"
+                  className="rounded-md bg-blue-500 px-4 py-2 text-sm text-white hover:bg-blue-600"
+                  onClick={SaveAsPDFHandler}
                 >
-                  <span>Buat Invoice Baru</span>
+                  Download
+                </button>
+                <button
+                  type="button"
+                  className="rounded-md bg-green-500 px-4 py-2 text-sm text-white hover:bg-green-600"
+                  onClick={addNextInvoiceHandler}
+                >
+                  New Invoice
                 </button>
               </div>
             </div>
