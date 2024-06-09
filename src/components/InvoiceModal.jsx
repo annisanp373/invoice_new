@@ -28,6 +28,8 @@ const InvoiceModal = ({
   total,
   dp,
   grandTotal,
+  accSosmed,
+  referalCode,
   onAddNextInvoice,
 }) => {
   function closeModal() {
@@ -191,12 +193,10 @@ const InvoiceModal = ({
                   </div>
                 </div>
                 <div className="mt-4 text-left">
-                  <div>
-                    <span>Akun Social Media:</span>
-                  </div>
-                  <div>
-                    <span>Kode Referral:</span>
-                  </div>
+                <div className="text-sm">
+                    <p className="font-bold">Akun Sosial Media :</p> <p>{accSosmed}</p>
+                    <p className="font-bold">Kode Referal :</p> <p>{referalCode}</p>
+                </div>
                   <div className="mt-4 text-left">
                     <p className="font-bold">Syarat & Ketentuan:</p>
                     <ol className="list-decimal pl-4 text-sm">

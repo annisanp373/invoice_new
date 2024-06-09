@@ -20,6 +20,8 @@ const InvoiceForm = () => {
   const [returnDateTime, setReturnDateTime] = useState('');
   const [guarantee, setGuarantee] = useState('');
   const [dp, setDp] = useState(0);
+  const [accSosmed, setAccSosmed] = useState('');
+  const [referalCode, setReferalCode] = useState('');
   const [items, setItems] = useState([
     {
       id: uid(6),
@@ -386,6 +388,38 @@ const InvoiceForm = () => {
             <h2 className="mt-4 text-sm font-bold sm:text-base">Grand Total: {grandTotal}</h2>
           </div>
         </div>
+        <label
+            htmlFor="accSosmed"
+            className="text-sm font-bold sm:text-base"
+          >
+            Akun Sosial Media :
+          </label>
+          <input
+            required
+            className="flex-1"
+            placeholder="Akun Sosial Media"
+            type="text"
+            name="accSosmed"
+            id="accSosmed"
+            value={accSosmed}
+            onChange={(event) => setAccSosmed(event.target.value)}
+          />
+          <label
+            htmlFor="referalCode"
+            className="text-sm font-bold sm:text-base"
+          >
+            Kode Referal :
+          </label>
+          <input
+            required
+            className="flex-1"
+            placeholder="Kode Referal"
+            type="text"
+            name="referalCode"
+            id="referalCode"
+            value={referalCode}
+            onChange={(event) => setReferalCode(event.target.value)}
+          />
         <button
           type="submit"
           className="my-4 w-full rounded bg-green-500 p-2 text-white"
@@ -409,6 +443,8 @@ const InvoiceForm = () => {
         dp={dp}
         grandTotal={grandTotal}
         invoiceNumber={invoiceNumber}
+        accSosmed={accSosmed}
+        referalCode={referalCode}
       />
     </form>
   );
